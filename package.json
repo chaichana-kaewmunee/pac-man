@@ -1,0 +1,15 @@
+{
+  "name": "pac-man",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:api": "cd apps/api && bun run dev",
+    "dev:web": "cd apps/web && bun run dev",
+    "build": "cd apps/web && bun run build && cd ../api && bun run build",
+    "typecheck": "cd apps/web && bun run typecheck && cd ../api && bun run typecheck && cd ../../packages/shared && bun run typecheck",
+    "test": "bun test"
+  }
+}

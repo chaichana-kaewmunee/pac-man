@@ -1,0 +1,499 @@
+:root {
+  color-scheme: dark;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #0f0f1a;
+  color: #f2f2f2;
+}
+
+.page {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 2rem;
+}
+
+.page h1 {
+  margin: 0 0 1rem;
+  font-size: 1.8rem;
+}
+
+/* ---- HUD ---- */
+.hud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: space-between;
+  background: #1c1c2e;
+  border: 1px solid #33334d;
+  border-radius: 8px;
+  padding: 0.6rem 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.hud-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.hud-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #9a9ab0;
+}
+
+.hud-value {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+/* ---- Board (คงสัดส่วนตาม maze: 19×15) ---- */
+.board-wrap {
+  position: relative;
+  width: 100%;
+}
+
+.game-canvas {
+  display: block;
+  width: 100%;
+  aspect-ratio: 19 / 15; /* ตรงกับสัดส่วนของ maze definition */
+  height: auto;
+  background: #000;
+  border: 2px solid #33334d;
+  border-radius: 6px;
+  touch-action: none;
+}
+
+.maze-error {
+  color: #ff8080;
+  border: 1px solid #ff8080;
+  border-radius: 6px;
+  padding: 1rem;
+}
+
+/* ---- Controls ---- */
+.controls {
+  display: flex;
+  gap: 0.6rem;
+  margin: 0.9rem 0;
+}
+
+.controls button {
+  background: #26263c;
+  color: #f2f2f2;
+  border: 1px solid #44446a;
+  border-radius: 6px;
+  padding: 0.5rem 1.2rem;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.controls button:hover:not(:disabled) {
+  background: #34345a;
+}
+
+.controls button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.hint {
+  font-size: 0.85rem;
+  color: #9a9ab0;
+  margin-top: 0.4rem;
+}
+
+/* ---- Responsive เล็ก ---- */
+@media (max-width: 520px) {
+  .page {
+    padding: 1rem 0.5rem;
+  }
+  .hud {
+    font-size: 0.85rem;
+    gap: 0.6rem;
+  }
+  .controls {
+    flex-wrap: wrap;
+  }
+  .controls button {
+    flex: 1 1 auto;
+  }
+}
+
+/* ---- Leaderboard (Phase 7) ---- */
+.leaderboard {
+  margin-top: 1.4rem;
+  background: #1c1c2e;
+  border: 1px solid #33334d;
+  border-radius: 8px;
+  padding: 0.8rem 1rem;
+}
+
+.leaderboard h2 {
+  margin: 0 0 0.5rem;
+  font-size: 1.05rem;
+}
+
+.lb-note {
+  color: #9a9ab0;
+  font-size: 0.9rem;
+  margin: 0.3rem 0;
+}
+
+.lb-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.lb-row {
+  display: flex;
+  gap: 0.6rem;
+  align-items: baseline;
+  font-size: 0.95rem;
+}
+
+.lb-rank {
+  color: #9a9ab0;
+  min-width: 1.4rem;
+}
+
+.lb-name {
+  flex: 1;
+  overflow-wrap: anywhere;
+}
+
+.lb-score {
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}
+
+.lb-error {
+  color: #ff8080;
+  font-size: 0.9rem;
+  margin: 0.3rem 0;
+}
+
+.lb-error button {
+  margin-top: 0.3rem;
+  background: #26263c;
+  color: #f2f2f2;
+  border: 1px solid #44446a;
+  border-radius: 6px;
+  padding: 0.3rem 0.9rem;
+  cursor: pointer;
+}
+
+/* ---- Score submit (Phase 7) ---- */
+.score-submit {
+  margin: 0.9rem 0;
+  background: #22223a;
+  border: 1px solid #44446a;
+  border-radius: 8px;
+  padding: 0.8rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.score-submit h3 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.lb-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: 0.8rem;
+  color: #9a9ab0;
+}
+
+.lb-field input {
+  max-width: 240px;
+  padding: 0.4rem 0.6rem;
+  border: 1px solid #44446a;
+  border-radius: 6px;
+  background: #0f0f1a;
+  color: #f2f2f2;
+  font-size: 0.95rem;
+}
+
+.lb-score-big {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.score-submit button {
+  align-self: flex-start;
+  background: #26263c;
+  color: #f2f2f2;
+  border: 1px solid #44446a;
+  border-radius: 6px;
+  padding: 0.4rem 1.1rem;
+  cursor: pointer;
+}
+
+.score-submit button:hover:not(:disabled) {
+  background: #34345a;
+}
+
+.score-submit button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.lb-success {
+  color: #7bd88f;
+  margin: 0;
+}
+
+/* feedback สั้นๆ ขณะเล่น (เก็บ pellet / ตาย) — ซ้อนมุมบนของ shell, ปิดอัตโนมัติ */
+.fx {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  font-weight: 700;
+  font-size: 14px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  pointer-events: none;
+  z-index: 5;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .fx {
+    animation: fx-pop 700ms ease-out forwards;
+  }
+
+  .btn {
+    transition: transform 0.06s ease, background 0.12s ease;
+  }
+}
+.fx-pellet {
+  color: #ffe600;
+  background: rgba(0, 0, 0, 0.55);
+}
+.fx-died {
+  color: #ff5a5a;
+  background: rgba(0, 0, 0, 0.7);
+  font-size: 18px;
+}
+@keyframes fx-pop {
+  0% { opacity: 0; transform: translateY(6px); }
+  20% { opacity: 1; transform: translateY(0); }
+  80% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(-8px); }
+}
+
+/* accessibility: user ลดการเคลื่อนไหว → ปิด animation ทั้งหมด (ปุ่ม/overlay/fx) */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms;
+    animation-iteration-count: 1;
+    transition-duration: 0.001ms;
+  }
+
+  .fx {
+    animation: none;
+  }
+
+  .btn {
+    transition: none;
+  }
+}
+
+/* ===== Phase 2: Phaser + UX ===== */
+
+/* ซ่อน h1 ที่ใช้ semantic อย่างเดียว */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---- Main menu ---- */
+.main-menu {
+  text-align: center;
+  padding: 1.5rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.menu-title {
+  font-size: 2.6rem;
+  margin: 0;
+  color: #ffe600;
+  text-shadow: 0 0 12px rgba(255, 230, 0, 0.35);
+}
+
+.menu-subtitle {
+  color: #9a9ab0;
+  margin: 0;
+}
+
+.controls-help {
+  background: #1c1c2e;
+  border: 1px solid #33334d;
+  border-radius: 8px;
+  padding: 0.8rem 1.4rem;
+  margin: 0.6rem 0 0.4rem;
+  text-align: left;
+  font-size: 0.95rem;
+}
+
+.controls-help h3 {
+  margin: 0 0 0.4rem;
+  font-size: 1rem;
+}
+
+.controls-help ul {
+  margin: 0;
+  padding-left: 1.1rem;
+}
+
+.controls-help li {
+  margin: 0.3rem 0;
+}
+
+kbd {
+  background: #26263c;
+  border: 1px solid #44446a;
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  padding: 0.05rem 0.45rem;
+  font-size: 0.85em;
+}
+
+/* ---- Buttons ---- */
+.btn {
+  background: #ffe600;
+  color: #1a1a2e;
+  border: none;
+  border-radius: 8px;
+  padding: 0.7rem 2rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background: #fff24d;
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn-play {
+  font-size: 1.3rem;
+  padding: 0.8rem 3rem;
+  margin-top: 0.5rem;
+}
+
+.btn-secondary {
+  background: #26263c;
+  color: #f2f2f2;
+  border: 1px solid #44446a;
+}
+
+.btn-small {
+  background: #26263c;
+  color: #f2f2f2;
+  border: 1px solid #44446a;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.35rem 1rem;
+  border-radius: 6px;
+}
+
+/* ---- Game shell (Phaser canvas + overlay) ---- */
+.game-shell {
+  position: relative;
+  width: 100%;
+}
+
+.game-shell .game-canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 19 / 15;
+  background: #000;
+  border: 2px solid #33334d;
+  border-radius: 6px;
+  touch-action: none;
+}
+
+/* Overlay: cover เฉพาะตอน pause/won/lost — แต่ไม่บัง HUD (HUD อยู่นอก shell) */
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(10, 10, 20, 0.72);
+  border: 0;
+  border-radius: 6px;
+  color: inherit;
+  height: 100%;
+  margin: 0;
+  max-height: none;
+  max-width: none;
+  padding: 0;
+  width: 100%;
+}
+
+.overlay-card {
+  background: #1c1c2e;
+  border: 1px solid #44446a;
+  border-radius: 10px;
+  padding: 1.4rem 2rem;
+  text-align: center;
+  min-width: 220px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  align-items: center;
+}
+
+.overlay-card h2 {
+  margin: 0;
+  font-size: 1.6rem;
+}
+
+.overlay-card p {
+  margin: 0;
+  color: #9a9ab0;
+}
+
+.overlay-card .btn {
+  min-width: 150px;
+}
+
+/* HUD แยกจาก canvas อยู่ด้านบน */
+.hud-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
